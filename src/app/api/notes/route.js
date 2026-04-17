@@ -10,7 +10,7 @@ const PREDEFINED_SITES = {
   '270': 'Deepak'
 };
 
-const IS_PROD = process.env.NODE_ENV === 'production' || !!process.env.KV_REST_API_URL;
+const IS_PROD = !!process.env.KV_REST_API_URL;
 const localNotesStore = global.notesStore || (global.notesStore = new Map());
 
 async function saveSiteData(siteId, data) {
