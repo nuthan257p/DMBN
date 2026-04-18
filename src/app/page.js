@@ -1,8 +1,10 @@
 'use client';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
   const [errorMsg, setErrorMsg] = useState('');
+  const router = useRouter();
 
   const handleGo = (e) => {
     e.preventDefault();
@@ -11,7 +13,7 @@ export default function Home() {
     const id = formData.get('siteIdInput');
 
     if (id && id.trim()) {
-      window.location.href = `/${encodeURIComponent(id.trim())}`;
+      router.push(`/${encodeURIComponent(id.trim())}`);
     } else {
       setErrorMsg('Please enter a Site ID (e.g., F21)');
     }
@@ -19,27 +21,24 @@ export default function Home() {
 
   return (
     <main>
-      <div className="glass-panel">
-        <h1>DMBN</h1>
-        <p className="subtitle">Your premium secure notepad.</p>
+      <div className="glass-panel fade-in">
+        <h1>DMBN Spaces</h1>
+        <p className="subtitle">Premium encrypted workspace.</p>
         
-        {errorMsg && <div className="error-msg" style={{color: 'var(--error-color)', marginBottom: '1rem', textAlign: 'center'}}>{errorMsg}</div>}
+        {errorMsg && <div className="error-msg text-error">{errorMsg}</div>}
 
         <form onSubmit={handleGo} suppressHydrationWarning>
           <div className="input-group">
             <input 
               name="siteIdInput"
               type="text" 
-              placeholder="Enter Site ID (e.g. F21, E85)"
+              placeholder="Enter Site ID (e.g. 257, F21)"
               suppressHydrationWarning
+              autoFocus
             />
           </div>
-          <button type="submit">
-            Access Notes
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14"></path>
-              <path d="M12 5l7 7-7 7"></path>
-            </svg>
+          <button type="submit" className="btn-primary" suppressHydrationWarning>
+            Access Notes Space
           </button>
         </form>
       </div>
