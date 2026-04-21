@@ -198,8 +198,8 @@ export default function SitePage() {
     const file = e.target.files[0];
     if (!file) return;
 
-    if (file.size > 5 * 1024 * 1024) {
-      alert("File exceeds maximum allowed size of 5MB.");
+    if (file.size > 10 * 1024 * 1024) {
+      alert("File exceeds maximum allowed size of 10MB.");
       e.target.value = null;
       return;
     }
