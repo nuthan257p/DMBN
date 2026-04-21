@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useParams } from 'next/navigation';
+import RichTextEditor from '../../components/RichTextEditor';
 
 export default function SitePage() {
   const params = useParams();
@@ -196,6 +197,13 @@ export default function SitePage() {
   const uploadPdf = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+      alert("File exceeds maximum allowed size of 5MB.");
+      e.target.value = null;
+      return;
+    }
+
     setSaveState('processing pdf...');
     
     const formData = new FormData();
@@ -443,24 +451,22 @@ export default function SitePage() {
         <div className={`editor-wrapper ${isSplitScreen ? 'split' : ''}`}>
           <div className="editor-container">
              {isSplitScreen && <h4>Primary Note</h4>}
-             <textarea 
+             <RichTextEditor 
                 key={`primary-${activeTab?.id}`}
                 value={activeTab?.content || ''}
-                onChange={(e) => updateTabContent(activeTab.id, e.target.value)}
+                onChange={(val) => updateTabContent(activeTab.id, val)}
                 placeholder="Type your primary notes here..."
-                spellCheck="false"
               />
           </div>
           
           {isSplitScreen && secondaryTab && (
             <div className="editor-container">
               <h4>Secondary Note</h4>
-              <textarea 
+              <RichTextEditor 
                 key={`secondary-${secondaryTab.id}`}
                 value={secondaryTab.content || ''}
-                onChange={(e) => updateTabContent(secondaryTab.id, e.target.value)}
+                onChange={(val) => updateTabContent(secondaryTab.id, val)}
                 placeholder="Type your secondary notes here..."
-                spellCheck="false"
               />
             </div>
           )}
