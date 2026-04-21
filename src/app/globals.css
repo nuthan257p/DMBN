@@ -514,6 +514,7 @@ button:focus, input:focus, select:focus, textarea:focus, .tab-btn:focus {
   outline: none;
   min-height: 250px;
   line-height: 1.6;
+  white-space: pre-wrap;
 }
 .rt-content[data-placeholder]:empty:before {
   content: attr(data-placeholder);
