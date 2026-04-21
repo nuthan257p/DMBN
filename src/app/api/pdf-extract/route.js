@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { PDFParse } from 'pdf-parse';
+import pdfParse from 'pdf-parse';
 
 export const dynamic = "force-dynamic";
 
@@ -13,10 +13,7 @@ export async function POST(request) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    
-    const parser = new PDFParse({ data: buffer });
-    const data = await parser.getText();
-    await parser.destroy();
+    const data = await pdfParse(buffer);
 
     return NextResponse.json({ text: data.text });
   } catch (error) {
